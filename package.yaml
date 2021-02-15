@@ -1,4 +1,4 @@
-name:                PlayingWithGloss
+name:                SnakeInHaskell
 version:             0.1.0.0
 github:              "Github username here/untitled"
 license:             BSD3
@@ -26,7 +26,7 @@ library:
   source-dirs: src
 
 executables:
-  PlayingWithGloss:
+  SnakeInHaskell:
     main:                Main.hs
     source-dirs:         app
     ghc-options:
@@ -34,7 +34,7 @@ executables:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - PlayingWithGloss
+    - SnakeInHaskell
     - gloss
 
 tests:
@@ -46,5 +46,5 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - PlayingWithGloss
+    - SnakeInHaskell
     - gloss
