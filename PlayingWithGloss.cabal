@@ -1,0 +1,70 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 9a439d2e9be4df674393f3e83246827357893af9b2eee2791fde8f4d88709a3a
+
+name:           PlayingWithGloss
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/Github username here/untitled#readme>
+homepage:       https://github.com/Github username here/untitled#readme
+bug-reports:    https://github.com/Github username here/untitled/issues
+author:         Author name here
+maintainer:     Author email here
+copyright:      2019 Author name here
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
+    ChangeLog.md
+
+source-repository head
+  type: git
+  location: https://github.com/Github username here/untitled
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_PlayingWithGloss
+  hs-source-dirs:
+      src
+  build-depends:
+      array
+    , base >=4.7 && <5
+  default-language: Haskell2010
+
+executable PlayingWithGloss
+  main-is: Main.hs
+  other-modules:
+      Game
+      Logic
+      Rendering
+      Paths_PlayingWithGloss
+  hs-source-dirs:
+      app
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      PlayingWithGloss
+    , array
+    , base >=4.7 && <5
+    , gloss
+  default-language: Haskell2010
+
+test-suite untitled-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_PlayingWithGloss
+  hs-source-dirs:
+      test
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      PlayingWithGloss
+    , array
+    , base >=4.7 && <5
+    , gloss
+  default-language: Haskell2010

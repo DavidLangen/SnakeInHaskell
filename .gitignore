@@ -1,0 +1,6 @@
+.stack-work/
+*~
+/untitled.iml
+/stack.yaml.lock
+/out/
+/.idea/
