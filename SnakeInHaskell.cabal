@@ -40,6 +40,7 @@ library
 executable SnakeInHaskell
   main-is: Main.hs
   other-modules:
+      Config
       Game
       Logic
       Rendering
