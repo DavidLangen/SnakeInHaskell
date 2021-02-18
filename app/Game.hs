@@ -14,6 +14,6 @@ data Game = Game {
 initalGame :: Game
 initalGame = Game {
 gameBoard =  Board (zip [0.. 10] [0..10]),
-gamePlayer = [(1,1)],
+gamePlayer = [(1,1), (1,2), (1,3)],
 gameState = Running
 }

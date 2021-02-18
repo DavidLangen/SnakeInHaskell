@@ -17,7 +17,7 @@ translatePlayerHead :: (Int, Int) -> Game -> Game
 translatePlayerHead amount game = updatePlayer game (updateSnakeHead amount (gamePlayer game))
 
 updateSnakeHead :: (Int, Int) -> Player -> Player
-updateSnakeHead (amountX, amountY) ((x,y):xs) = (amountX + x, amountY + y)  : xs
+updateSnakeHead (amountX, amountY) (head@(x,y):xs) = (amountX + x, amountY + y) : head : take (length xs - 1) xs
 
 updatePlayer :: Game -> Player -> Game
 updatePlayer game player = game { gamePlayer = player}
