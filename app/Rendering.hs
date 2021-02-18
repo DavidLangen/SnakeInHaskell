@@ -10,11 +10,25 @@ boardGrid = color gridColor (pictures $ concatMap (\index -> [
                                          line [(0.0, index * cellHeight), (fromIntegral screenWidth, index * cellHeight)]]) -- horizontal lines
                                           [0.0..fromIntegral amountOfCells])
 
-boardAsPicture :: Picture
-boardAsPicture = pictures [boardGrid]
+snapPictureToCell :: (Integral a, Integral b) => Picture -> (a, b) -> Picture
+snapPictureToCell pic (row, column) = translate x y pic
+                                where x = fromIntegral column * cellWidth + cellWidth * 0.5
+                                      y = fromIntegral row * cellHeight + cellHeight * 0.5
 
-updateBoardForRunning :: Board -> Picture
-updateBoardForRunning board = boardAsPicture
+
+boardAsPicture :: Player -> Picture
+boardAsPicture player = pictures [snakeCellsOfBoard player,
+                          boardGrid]
+
+drawSnakeSingleFragment :: Picture
+drawSnakeSingleFragment = color gridColor $ rectangleSolid cellWidth cellHeight
+
+snakeCellsOfBoard :: Player -> Picture
+snakeCellsOfBoard player = pictures $ map (snapPictureToCell drawSnakeSingleFragment) $ player
+
+
+updateBoardForRunning :: Player -> Picture
+updateBoardForRunning player = boardAsPicture player
 
 --TODO use later a bitmap, because rendering text in gloss is garbage
 showGameOverScreen :: Picture
@@ -26,7 +40,7 @@ showGameOverScreen = color gameOverTextColor
 gameAsPicture :: Game -> Picture
 gameAsPicture game =  translateOriginToLeftUpperCorner frame
   where frame = case gameState game of
-                      Running -> updateBoardForRunning (gameBoard game)
+                      Running -> updateBoardForRunning (gamePlayer game)
                       GameOver -> showGameOverScreen
 
 translateOriginToLeftUpperCorner :: Picture -> Picture
