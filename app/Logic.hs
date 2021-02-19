@@ -28,9 +28,13 @@ vectorByDirection d speed = case d of
   RIGHT -> (0, speed)
 
 moveSnake :: Direction -> Game -> Game
-moveSnake d game@Game {gamePlayer = Player {direction = playerD}}
-  | checkOppositeDirection d playerD = game
-  | otherwise = translateSnakeHeadWithSpeed d 1 game
+moveSnake
+  d
+  game@Game
+    { gamePlayer = Player {direction = playerD}
+    }
+    | checkOppositeDirection d playerD = game
+    | otherwise = translateSnakeHeadWithSpeed d 1 game
 
 getOppositeDirectionOf :: Direction -> Direction
 getOppositeDirectionOf d = case d of
@@ -52,12 +56,14 @@ translateSnakeHeadWithSpeed d speed game
   | otherwise = updateSnakeAndDirection game newSnakeHead d
   where
     sn = snake (gamePlayer game)
-    newSnakeHead = updateSnakeHead (vectorByDirection d speed) sn
+    withLastElem = head sn `elem` (gameBoard game)
+    newSnakeHead = updateSnakeHead withLastElem (vectorByDirection d speed) sn
 
-updateSnakeHead :: (Int, Int) -> Snake -> Snake
-updateSnakeHead _ [] = []
-updateSnakeHead (amountX, amountY) [(x, y)] = [(amountX + x, amountY + y)]
-updateSnakeHead (amountX, amountY) (h@(x, y) : xs) = (amountX + x, amountY + y) : h : take (length xs - 1) xs
+updateSnakeHead :: Bool -> (Int, Int) -> Snake -> Snake
+updateSnakeHead _ _ [] = []
+updateSnakeHead _ (amountX, amountY) [(x, y)] = [(amountX + x, amountY + y)]
+updateSnakeHead withLastElem (amountX, amountY) (h@(x, y) : xs) = (amountX + x, amountY + y) : h : take (length xs - wipedLastedElem) xs
+                                                    where wipedLastedElem = if withLastElem then 0 else 1 
 
 updateSnakeAndDirection :: Game -> Snake -> Direction -> Game
 updateSnakeAndDirection game s d = game {gamePlayer = (gamePlayer game) {snake = s, direction = d}}
