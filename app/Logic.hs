@@ -27,10 +27,15 @@ vectorByDirection d speed = case d of
 translateSnakeHead :: Direction -> Game -> Game
 translateSnakeHead d = translateSnakeHeadWithSpeed d 1
 
+checkWallCollison :: Cell -> Bool
+checkWallCollison (x,y) = x >= amountOfCells || y >= amountOfCells || x < 0 || y < 0
+
 -- vielleicht mit record matching
 translateSnakeHeadWithSpeed :: Direction -> Int -> Game -> Game
-translateSnakeHeadWithSpeed d speed game = updateSnakeAndDirection game (updateSnakeHead (vectorByDirection d speed) (snake (gamePlayer game))) d
-
+translateSnakeHeadWithSpeed d speed game = if checkWallCollison $ head newSnakeHead then game{gameState = GameOver}
+                                           else updateSnakeAndDirection game newSnakeHead d
+                                           where sn = snake (gamePlayer game)
+                                                 newSnakeHead = updateSnakeHead (vectorByDirection d speed) sn
 
 updateSnakeHead :: (Int, Int) -> Snake -> Snake
 updateSnakeHead _ [] = []
