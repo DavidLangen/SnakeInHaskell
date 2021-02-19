@@ -1,6 +1,10 @@
 module Config where
 import Graphics.Gloss.Data.Color
 
+-- Player
+snakeSpeed :: Float
+snakeSpeed = 0.5
+
 -- Basic Configs
 amountOfCells :: Int
 amountOfCells = 10

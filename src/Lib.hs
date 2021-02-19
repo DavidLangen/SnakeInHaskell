@@ -1,6 +1,5 @@
-module Lib
-    ( someFunc
-    ) where
+module Lib  where
 
-someFunc :: IO ()
-someFunc = putStrLn "someFunc"
+mapTuple :: (a -> b) -> (a, a) -> (b, b)
+mapTuple f (a1, a2) = (f a1, f a2)
+

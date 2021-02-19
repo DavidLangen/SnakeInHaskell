@@ -1,7 +1,13 @@
 module Game where
+import Data.Data
 
+data Player = Player {
+                    snake :: Snake,
+                    direction :: Direction
+                    } deriving (Eq, Show)
+type Snake = [Cell]
 
-type Player = [Cell]
+data Direction = UP | DOWN | LEFT | RIGHT deriving (Eq, Show)
 data State = Running | GameOver deriving (Eq, Show)
 type Cell = (Int, Int)
 newtype Board = Board [Cell] deriving (Eq, Show)
@@ -14,6 +20,6 @@ data Game = Game {
 initalGame :: Game
 initalGame = Game {
 gameBoard =  Board (zip [0.. 10] [0..10]),
-gamePlayer = [(1,1), (1,2), (1,3)],
+gamePlayer = Player {snake = [(1,1), (1,2)], direction = UP},
 gameState = Running
 }
