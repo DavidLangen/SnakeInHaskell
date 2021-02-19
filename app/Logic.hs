@@ -7,10 +7,10 @@ transformGame = handleKeys
 
 
 handleKeys :: Event -> Game -> Game
-handleKeys (EventKey (Char 'w') _ _ _) game = translateSnakeHead UP game
-handleKeys (EventKey (Char 'a') _ _ _) game = translateSnakeHead LEFT game
-handleKeys (EventKey (Char 'd') _ _ _) game = translateSnakeHead RIGHT game
-handleKeys (EventKey (Char 's') _ _ _) game = translateSnakeHead DOWN game
+handleKeys (EventKey (Char 'w') Down _ _) game = translateSnakeHead UP game
+handleKeys (EventKey (Char 'a') Down _ _) game = translateSnakeHead LEFT game
+handleKeys (EventKey (Char 'd') Down _ _) game = translateSnakeHead RIGHT game
+handleKeys (EventKey (Char 's') Down _ _) game = translateSnakeHead DOWN game
 handleKeys _ game = game
 
 updateOverTime :: Float -> Game -> Game
@@ -36,7 +36,7 @@ updateSnakeHead :: (Int, Int) -> Snake -> Snake
 updateSnakeHead _ [] = []
 updateSnakeHead (amountX, amountY) [(x,y)] = [(amountX + x, amountY + y)]
 updateSnakeHead (amountX, amountY) (h@(x,y):xs) = (amountX + x, amountY + y) : h : take (length xs - 1) xs
-                
+
 
 updateSnakeAndDirection :: Game -> Snake -> Direction -> Game
 updateSnakeAndDirection game s d = game {gamePlayer = (gamePlayer game) {snake = s, direction = d}}
