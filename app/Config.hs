@@ -29,5 +29,8 @@ backgroundColor = makeColor 0 0 0 255
 gridColor :: Color
 gridColor = makeColor 150 150 150 255
 
+fruitColor :: Color
+fruitColor = makeColor 0 0 255 255
+
 gameOverTextColor :: Color
 gameOverTextColor = makeColor 150 150 150 255

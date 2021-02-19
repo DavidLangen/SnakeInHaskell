@@ -10,7 +10,7 @@ type Snake = [Cell]
 data Direction = UP | DOWN | LEFT | RIGHT deriving (Eq, Show)
 data State = Running | GameOver deriving (Eq, Show)
 type Cell = (Int, Int)
-newtype Board = Board [Cell] deriving (Eq, Show)
+type Board = [Cell]
 data Game = Game {
                   gameBoard :: Board,
                   gamePlayer :: Player,
@@ -19,7 +19,7 @@ data Game = Game {
 
 initalGame :: Game
 initalGame = Game {
-gameBoard =  Board (zip [0.. 10] [0..10]),
+gameBoard =  [(5,5)],
 gamePlayer = Player {snake = [(1,1), (1,2)], direction = UP},
 gameState = Running
 }

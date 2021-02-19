@@ -15,10 +15,17 @@ snapPictureToCell pic (row, column) = translate x y pic
                                 where x = fromIntegral column * cellWidth + cellWidth * 0.5
                                       y = fromIntegral row * cellHeight + cellHeight * 0.5
 
+drawFruit :: Picture
+drawFruit = color fruitColor $ circleSolid radius
+        where radius = (cellWidth/2) * 0.5 -- better looking
 
-boardAsPicture :: Snake -> Picture
-boardAsPicture player = pictures [snakeCellsOfBoard player,
-                          boardGrid]
+fruitCellsOfBoard :: Board -> Picture
+fruitCellsOfBoard fruits = pictures $ map (snapPictureToCell drawFruit) fruits
+
+boardAsPicture :: Snake -> Board -> Picture
+boardAsPicture player board  = pictures [boardGrid,
+                                  fruitCellsOfBoard board,
+                                  snakeCellsOfBoard player]
 
 drawSnakeSingleFragment :: Picture
 drawSnakeSingleFragment = color gridColor $ rectangleSolid cellWidth cellHeight
@@ -26,22 +33,24 @@ drawSnakeSingleFragment = color gridColor $ rectangleSolid cellWidth cellHeight
 snakeCellsOfBoard :: Snake -> Picture
 snakeCellsOfBoard player = pictures $ map (snapPictureToCell drawSnakeSingleFragment) player
 
-
-updateBoardForRunning :: Snake -> Picture
-updateBoardForRunning player = boardAsPicture player
-
 --TODO use later a bitmap, because rendering text in gloss is garbage
 showGameOverScreen :: Picture
 showGameOverScreen = color gameOverTextColor
                                           $ translate (fromIntegral screenWidth * 0.2) (fromIntegral screenHeight * 0.5)
                                           $ scale (0.5) (0.5) $ text "Game Over"
 
-
 gameAsPicture :: Game -> Picture
-gameAsPicture game =  translateOriginToLeftUpperCorner frame
-  where frame = case gameState game of
-                      Running -> updateBoardForRunning (snake (gamePlayer game))
-                      GameOver -> showGameOverScreen
+gameAsPicture
+  Game
+    { gamePlayer = Player {snake = sn},
+      gameBoard = b,
+      gameState = state
+    } = translateOriginToLeftUpperCorner frame
+    where
+      frame = case state of
+        Running -> boardAsPicture sn b
+        GameOver -> showGameOverScreen
+
 
 translateOriginToLeftUpperCorner :: Picture -> Picture
 translateOriginToLeftUpperCorner = translate (fromIntegral screenWidth * (- 0.5)) (fromIntegral screenHeight * (- 0.5))
