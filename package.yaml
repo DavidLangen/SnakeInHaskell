@@ -36,6 +36,7 @@ executables:
     dependencies:
     - SnakeInHaskell
     - gloss
+    - random
 
 tests:
   untitled-test:
@@ -48,3 +49,4 @@ tests:
     dependencies:
     - SnakeInHaskell
     - gloss
+    - random

@@ -1,4 +1,5 @@
 module Game where
+import System.Random
 import Data.Data
 
 data Player = Player {
@@ -12,13 +13,15 @@ data State = Running | GameOver deriving (Eq, Show)
 type Cell = (Int, Int)
 type Board = [Cell]
 data Game = Game {
+                  rndGen :: StdGen,
                   gameBoard :: Board,
                   gamePlayer :: Player,
                   gameState :: State
-                  } deriving (Eq, Show)
+                  }
 
-initalGame :: Game
-initalGame = Game {
+initalGame :: StdGen -> Game
+initalGame g = Game {
+rndGen = g,
 gameBoard =  [(5,5)],
 gamePlayer = Player {snake = [(1,1), (1,2)], direction = UP},
 gameState = Running

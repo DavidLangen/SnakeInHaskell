@@ -35,6 +35,7 @@ library
   build-depends:
       array
     , base >=4.7 && <5
+    , random
   default-language: Haskell2010
 
 executable SnakeInHaskell
@@ -53,6 +54,7 @@ executable SnakeInHaskell
     , array
     , base >=4.7 && <5
     , gloss
+    , random
   default-language: Haskell2010
 
 test-suite untitled-test

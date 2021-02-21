@@ -1,11 +1,13 @@
 module Main where
-import Lib
+import System.Random
 import Graphics.Gloss
+import Graphics.Gloss.Interface.Environment
+
+import Lib
 import Game
 import Logic
 import Rendering
 import Config
-import Graphics.Gloss.Interface.Environment
 
 
 window :: Int -> Int -> Display
@@ -13,5 +15,6 @@ window windowPosX windowPosY = InWindow "Snake" (screenWidth, screenHeight) (win
 
 main :: IO ()
 main = do
+        g <- newStdGen
         windowSize <-  fmap (mapTuple (\x -> floor $ fromIntegral x * (-0.5))) getScreenSize   
-        play (window (fst windowSize) (snd windowSize)) backgroundColor 2 initalGame gameAsPicture transformGame updateOverTime
+        play (window (fst windowSize) (snd windowSize)) backgroundColor 2 (initalGame g) gameAsPicture transformGame updateOverTime
