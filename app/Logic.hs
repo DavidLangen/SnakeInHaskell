@@ -15,11 +15,6 @@ handleKeys (EventKey (Char 'd') Down _ _) game = moveSnake RIGHT game
 handleKeys (EventKey (Char 's') Down _ _) game = moveSnake DOWN game
 handleKeys _ game = game
 
-updateOverTime :: Float -> Game -> Game
-updateOverTime time game = translateSnakeHeadWithSpeed directionOfPlayer speed game
-  where
-    speed = truncate (snakeSpeed + time)
-    directionOfPlayer = direction (gamePlayer game)
 
 generateFruitOnFreeCell :: Int -> Snake -> Cell
 generateFruitOnFreeCell seed sn = head $ filter (`notElem` sn) $ genRanTuple seed (amountOfCells-1)
@@ -63,8 +58,8 @@ translateSnakeHeadWithSpeed direct speed game
   | otherwise =
     game
       {
-        gameBoard = updateBoardOnCollision collideWithFruit (head sn) board sn newRndInt,
-        rndGen = g',
+        gameBoard = if collideWithFruit then updateBoardOnCollision board sn newRndInt else board,
+        rndGen = newRndGen,
         gamePlayer =
           Player
             { snake = newSnake,
@@ -73,15 +68,14 @@ translateSnakeHeadWithSpeed direct speed game
       }
   where
     sn = snake (gamePlayer game)
-    (newRndInt, g') = next (rndGen game)
+    (newRndInt, newRndGen) = next (rndGen game)
     board = gameBoard game
     collideWithFruit = head sn `elem` gameBoard game
     newSnake = updateSnake collideWithFruit (vectorByDirection direct speed) sn
 
-updateBoardOnCollision :: Bool -> Cell -> Board -> Snake -> Int -> Board
-updateBoardOnCollision collision fruit board sn rnd
-              | collision = generateFruitOnFreeCell rnd sn : remove fruit board
-              | otherwise = board
+updateBoardOnCollision :: Board -> Snake -> Int -> Board
+updateBoardOnCollision board sn rnd = generateFruitOnFreeCell rnd sn : remove fruit board
+            where fruit = head sn
 
 updateSnake :: Bool -> (Int, Int) -> Snake -> Snake
 updateSnake _ _ [] = []

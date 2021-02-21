@@ -4,6 +4,7 @@ import Graphics.Gloss
 import Graphics.Gloss.Interface.Environment
 
 import Lib
+import Animation
 import Game
 import Logic
 import Rendering
