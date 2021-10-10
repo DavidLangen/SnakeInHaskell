@@ -60,16 +60,16 @@ getOppositeDirectionOf d = case d of
 checkOppositeDirection :: Direction -> Direction -> Bool
 checkOppositeDirection a b = a == getOppositeDirectionOf b
 
-checkWallAndTailCollison :: Snake -> Bool
-checkWallAndTailCollison s = checkWallHeadCollison (head s) || head s `elem` tail s
+checkWallAndTailCollision :: Snake -> Bool
+checkWallAndTailCollision s = checkWallHeadCollision (head s) || head s `elem` tail s
 
-checkWallHeadCollison :: Cell -> Bool
-checkWallHeadCollison (x, y) = x >= amountOfCells || y >= amountOfCells || x < 0 || y < 0
+checkWallHeadCollision :: Cell -> Bool
+checkWallHeadCollision (x, y) = x >= amountOfCells || y >= amountOfCells || x < 0 || y < 0
 
 -- vielleicht mit record matching
 translateSnakeHeadWithSpeed :: Direction -> Int -> Game -> Game
 translateSnakeHeadWithSpeed direct speed game
-  | checkWallAndTailCollison newSnake = game {gameState = GameOver}
+  | checkWallAndTailCollision newSnake = game {gameState = GameOver}
   | otherwise =
     game
       {
