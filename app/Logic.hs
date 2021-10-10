@@ -6,18 +6,29 @@ import System.Random
 import Graphics.Gloss.Interface.Pure.Game
 
 transformGame :: Event -> Game -> Game
-transformGame = handleKeys
+transformGame e game = case (gameState game) of
+                  Running -> handleGameplayKeys e game
+                  GameOver -> handleGameOverKeys e game
 
-handleKeys :: Event -> Game -> Game
-handleKeys (EventKey (Char 'w') Down _ _) game = moveSnake UP game
-handleKeys (EventKey (Char 'a') Down _ _) game = moveSnake LEFT game
-handleKeys (EventKey (Char 'd') Down _ _) game = moveSnake RIGHT game
-handleKeys (EventKey (Char 's') Down _ _) game = moveSnake DOWN game
-handleKeys (EventKey (SpecialKey KeyUp) Down _ _) game = moveSnake UP game
-handleKeys (EventKey (SpecialKey KeyLeft) Down _ _) game = moveSnake LEFT game
-handleKeys (EventKey (SpecialKey KeyRight) Down _ _) game = moveSnake RIGHT game
-handleKeys (EventKey (SpecialKey KeyDown) Down _ _) game = moveSnake DOWN game
-handleKeys _ game = game
+handleGameOverKeys :: Event -> Game -> Game
+handleGameOverKeys _ game = game {
+                                    gameBoard =  [(5,5)],
+                                    gamePlayer = Player {snake = [(1,1), (1,2)], direction = UP},
+                                    gameState = Running
+                                  }
+
+
+
+handleGameplayKeys :: Event -> Game -> Game
+handleGameplayKeys (EventKey (Char 'w') Down _ _) game = moveSnake UP game
+handleGameplayKeys (EventKey (Char 'a') Down _ _) game = moveSnake LEFT game
+handleGameplayKeys (EventKey (Char 'd') Down _ _) game = moveSnake RIGHT game
+handleGameplayKeys (EventKey (Char 's') Down _ _) game = moveSnake DOWN game
+handleGameplayKeys (EventKey (SpecialKey KeyUp) Down _ _) game = moveSnake UP game
+handleGameplayKeys (EventKey (SpecialKey KeyLeft) Down _ _) game = moveSnake LEFT game
+handleGameplayKeys (EventKey (SpecialKey KeyRight) Down _ _) game = moveSnake RIGHT game
+handleGameplayKeys (EventKey (SpecialKey KeyDown) Down _ _) game = moveSnake DOWN game
+handleGameplayKeys _ game = game
 
 
 generateFruitOnFreeCell :: Int -> Snake -> Cell

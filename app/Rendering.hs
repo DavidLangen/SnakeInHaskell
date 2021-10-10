@@ -35,9 +35,15 @@ snakeCellsOfBoard player = pictures $ map (snapPictureToCell drawSnakeSingleFrag
 
 --TODO use later a bitmap, because rendering text in gloss is garbage
 showGameOverScreen :: Picture
-showGameOverScreen = color gameOverTextColor
+showGameOverScreen = let
+                        gameOverTitle = color gameOverTextColor
                                           $ translate (fromIntegral screenWidth * 0.2) (fromIntegral screenHeight * 0.5)
                                           $ scale (0.5) (0.5) $ text "Game Over"
+                        infoText = color gameOverTextColor
+                                          $ translate (fromIntegral screenWidth * 0.2) (fromIntegral screenHeight * 0.3)
+                                          $ scale (0.2) (0.2) $ text "Press any Key to try again!"
+                      in
+                      pictures [gameOverTitle, infoText]
 
 snakeTitle :: Picture
 snakeTitle = color gameOverTextColor
