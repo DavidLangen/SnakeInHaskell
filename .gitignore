@@ -1,6 +1,6 @@
 .stack-work/
 *~
-/untitled.iml
+SnakeInHaskell.iml
 /stack.yaml.lock
 /out/
 /.idea/
