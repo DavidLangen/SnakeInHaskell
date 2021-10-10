@@ -39,6 +39,11 @@ showGameOverScreen = color gameOverTextColor
                                           $ translate (fromIntegral screenWidth * 0.2) (fromIntegral screenHeight * 0.5)
                                           $ scale (0.5) (0.5) $ text "Game Over"
 
+snakeTitle :: Picture
+snakeTitle = color gameOverTextColor
+                              $ translate (fromIntegral screenWidth * (- 0.1)) (fromIntegral screenHeight * (1.2))
+                              $ scale (0.5) (0.5) $ text "The Snake Game"
+
 gameAsPicture :: Game -> Picture
 gameAsPicture
   Game
@@ -48,7 +53,7 @@ gameAsPicture
     } = translateOriginToLeftUpperCorner frame
     where
       frame = case state of
-        Running -> boardAsPicture sn b
+        Running -> pictures [snakeTitle, boardAsPicture sn b]
         GameOver -> showGameOverScreen
 
 
