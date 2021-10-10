@@ -19,8 +19,8 @@ data Game = Game {
                   gameState :: State
                   }
 
-initalGame :: StdGen -> Game
-initalGame g = Game {
+initializeGame :: StdGen -> Game
+initializeGame g = Game {
 rndGen = g,
 gameBoard =  [(5,5)],
 gamePlayer = Player {snake = [(1,1), (1,2)], direction = UP},

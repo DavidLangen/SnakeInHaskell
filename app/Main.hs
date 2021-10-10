@@ -18,4 +18,4 @@ main :: IO ()
 main = do
         g <- newStdGen
         windowSize <-  fmap (mapTuple (\x -> floor $ fromIntegral x * (-0.5))) getScreenSize   
-        play (window (fst windowSize) (snd windowSize)) backgroundColor 2 (initalGame g) gameAsPicture transformGame updateOverTime
+        play (window (fst windowSize) (snd windowSize)) backgroundColor 2 (initializeGame g) gameAsPicture transformGame updateOverTime
