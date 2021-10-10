@@ -13,6 +13,10 @@ handleKeys (EventKey (Char 'w') Down _ _) game = moveSnake UP game
 handleKeys (EventKey (Char 'a') Down _ _) game = moveSnake LEFT game
 handleKeys (EventKey (Char 'd') Down _ _) game = moveSnake RIGHT game
 handleKeys (EventKey (Char 's') Down _ _) game = moveSnake DOWN game
+handleKeys (EventKey (SpecialKey KeyUp) Down _ _) game = moveSnake UP game
+handleKeys (EventKey (SpecialKey KeyLeft) Down _ _) game = moveSnake LEFT game
+handleKeys (EventKey (SpecialKey KeyRight) Down _ _) game = moveSnake RIGHT game
+handleKeys (EventKey (SpecialKey KeyDown) Down _ _) game = moveSnake DOWN game
 handleKeys _ game = game
 
 
